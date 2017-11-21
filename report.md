@@ -3,20 +3,20 @@
 ### Network Architecture:
 
 To perform semantic segmentation, fully convolution network is used. <br/>
-Initially reduced spatial features of image are captured using FCN approach. Once downsized feature map is achieved using FCN where spatial information is retained, decoder block is used to achieve pixel level classification. For decoder up sampling techniques were used. Concatenation techniques were used to combine encoder layers to each layer in decoder block to achieve finer level pixelwise segmentation. <br/><br/><br/>
+Initially reduced spatial features of image are captured using FCN approach. Using FCN downsized feature map is achieved , where spatial information is retained. Thereafter, Decoder block is used to achieve pixel level classification. In decoder flow, up sampling techniques were used. Concatenation techniques were used to combine encoder layers to each layer in decoder block to achieve finer level pixelwise segmentation. <br/><br/><br/>
 
-Important details of network are explained below.
+Important details and clear explaination of network are explained below.
 
 #### Why 1x1 convolution and FCN?
 
 
-As part of lab exercises fully connected convolution networks are used to classiy images. n fully connected convolution networks, in final stages of network, spatial inormation of features is lost as all the pixel values in reduced feature maps are spread vertically (no significance is given to pixel location) to make connections to neurons in next layer  . However as the task for semantic segmentation is to make classification at pixel level, the spatial importance of features becomes important. To solve this problem we have been introduced to conceptof 1x1 convolution and FCN(Fully convolution networks). As in 1x1 convolution, operations are perormed only at single pixel level and adjacent pixels will not have any impact  in deciding the value of corresponding pixel in next layer fetaure map, spatiial infomation is ket intact. All the calculattions and dimensionality reduction of feature maps will happn only along the depth direction. <br/><br/><br/>
+As part of earlier lab exercises fully connected convolution networks are used to classiy images. In fully connected convolution networks, at final stages of network, spatial inormation of features is lost as all the pixel values in reduced feature maps are spread vertically (no significance is given to pixel location) to make connections to neurons in next layer  . However as the task for semantic segmentation is to make classification at pixel level, the spatial importance of features becomes important. To solve this problem we have been introduced to concept of 1x1 convolution and FCN(Fully convolution networks). As in 1x1 convolution, operations are perormed only at single pixel level and adjacent pixels will not have any impact  in deciding the value of corresponding pixel in next layer fetaure map, spatiial infomation is kept intact. All the calculations and dimensionality reduction of feature maps will happen only along the depth direction. <br/><br/><br/>
 
 #### Encoder block:
 
 #### Seprable convolutions:
 
-For individual layers in encoder block, for the initial hidden layers, seperable convolution 2d is used instead of normal convolution procedure. As explained in tutorial, seperable convolution has  an advantage to learn less number of weights than compareed to normal convolution procedre. In theory, this can be shown with convolving an image with two one dimensional matrices in sequence can be equivlent to cnvolving an image with single 2-dimensional matrix. <br/><br/>
+In encoder block, for the initial hidden layers, seperable convolution 2d is used instead of normal convolution procedure. As explained in tutorial, seperable convolution has  an advantage to maintain less number of weights than compareed to normal convolution procedre. In theory, this can be shown by claiming convolving an image with two one dimensional matrices in sequence can be equivlent to cnvolving an image with single 2-dimensional matrix. <br/><br/>
 
 H = H1 x H2, H is a 2 dimensional matrix with size axb, H1 with ax1, H2 with 1xb. It can be shown that axb is significaantly larger than a+b. With this argument we can say that seprable convolutions need less number of weights to learn. For details please refer lecture slides.<br/>
 
@@ -82,7 +82,7 @@ def fcn_model(inputs, num_classes):
 
 #### Extending model to other classes such as dogs and cats:
 
-With existing model, weights and data, it will become errneous to make pixel wise classification for other categories such as cat or dog. We will be requiring data of other classes to train the network. However, techniques ace been proposed to do transfer learning for semantic segmentation task too. Such techniues are beyond scope of this course. An example can be found in this publication. (https://pdfs.semanticscholar.org/1837/decb49fb6fc68a6085e797faefb591fecb8a.pdf)
+With existing model, weights and data, it will become erreneous to make pixel wise classification for other categories such as cat or dog. We will be requiring data of other classes to train the network. However, new techniques have been proposed to do transfer learning for semantic segmentation task too. Such techniues are beyond scope of this course. An example can be found in this publication. (https://pdfs.semanticscholar.org/1837/decb49fb6fc68a6085e797faefb591fecb8a.pdf)
 
 ### Parameters selected:
 
