@@ -1,4 +1,4 @@
-[network_arch]: ./data/FCN_netwok_arch.jpg
+[network_arch]: ./data/FCN_netwok_arch.PNG
 
 ### Network Architecture:
 
