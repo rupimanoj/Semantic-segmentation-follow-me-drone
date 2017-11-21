@@ -1,4 +1,4 @@
-[network_arch]: ./data/network_connection_1.jpg
+[network_arch]: ./data/network_connection_2.jpg
 
 ### Network Architecture:
 
