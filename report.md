@@ -97,6 +97,31 @@ steps_per_epoch = 140
 validation_steps = 30
 workers = 2
 ```
+#### Explaination about hyper parameter tuning.
+<br/>
+
+As the underlying error optimization function uses stochastic batch gradient descent funtion, the significance of learning rate and number of epochs can be similarly related to that of simple continuous regression learning. For stochastic gradient descent optimization, few thumb rules, that can be remembered are pointed below. <br/>
+
+* Keep training network till the error fuction reaches the vicintiy of minimum error value. Low number of epochs give less number of chances to reeach miniimu error value. However on other side with high number of epochs we have risk of overfitting, as with each repetiton model is getting tied to training data and is no more a generalized model. Such overfitting cases can be identified using  validation error. <br/>
+
+* Similarly, low training rate will take more number of epochs to reach minimum value. More epohs mean more learning time  and compute power. However, with higher learning rate we have risk of overjumping the minimum error value. <br/>
+To address learning  rate tuning issue, techniques have been proposed to use variable leaning rate instead of single learning rate. Broad idea behind this approach is to use higher learrning rates initillay and as network approahes minimum value decrease the learning rate. Apart from varying learning rate with time, we also have techniques to vary the learning rate for each weight parameter. <br/>
+In follow me deep learning project we have taken this approach to tune the learning rate parameter. This can be achived by <b>adagrad optimizer</b>. Even though adagrad optimizer tunes the learning rate intelligently with iterations, the initial learning rate supplied to the optimizer plays critical role in the rate at which minimum error value is obtained. <br/>
+
+The above insights are explained with  below results from the project. <br/>
+
+| Case        | Learning rate           | epochs  |
+| ------------- |:-------------:| -----:|
+| case1      | 0.01 | 5 |
+| case2       | 0.005      |   5 |
+| case3(solution case)  | 0.01     |    15 |
+| case4  | 0.01      |    20 |
+
+#### Case 1:
+#### Case 2:
+#### Case 3:
+#### Case 4:
+
 
 ### Future work
 
