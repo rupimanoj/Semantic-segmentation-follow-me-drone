@@ -10,7 +10,7 @@
 [result_solution]: ./data/solution_result.PNG
 [chair]: ./data/chair.PNG
 [high_level_features]: ./data/high_level.PNG
-[skip_connections]: ./data/skip_conection.PNG
+[skip_connections]: ./data/skip_connection.PNG
 [upsampling]: ./data/upsampling.PNG
 [hero_slow_learn]: ./data/hero_slow_learn.PNG
 [hero_low_epoch]: ./data/hero_low_epoch.PNG
@@ -93,7 +93,7 @@ In follow me deep learning project we have taken this approach to tune the learn
 The above insights are explained with  below results from the project. <br/>
 
 | Case        | Learning rate           | epochs  | IOU  |
-| ------------- |:-------------:| -----:|
+| ------------- |:-------------:| -----:| -----:|
 | case1  (low epoch)    | 0.01 | 5 | 0.01 |
 | case2   (low learn)    | 0.005      |   5 | 0.01 |
 | case3(solution case)  | 0.01     |    15 | 0.01 |
@@ -102,22 +102,20 @@ The above insights are explained with  below results from the project. <br/>
 #### Case 1:
 ![alt text][graph_low_epoch] <br/>
 ![alt text][result_low_epoch] <br/>
-![alt text][hero_low_epoch] <br/>
-![alt text][others_low_epoch] <br/>
+
 
 #### Case 2:
 ![alt text][graph_low_rate] <br/>
 ![alt text][result_low_rate] <br/>
-![alt text][hero_slow_learn] <br/>
-![alt text][others_slow_learn] <br/>
+
 
 #### Case 3:
 ![alt text][graph_solution] <br/>
 ![alt text][result_solution] <br/>
 
 #### Case 4:
-![alt text][validation_graph] <br/>
-![alt text][graph_overfitting] <br/><br/>
+![alt text][graph_overfitting] <br/>
+![alt text][result_overfitting] <br/><br/>
 
 #### Encoder block:
 
