@@ -94,28 +94,34 @@ The above insights are explained with  below results from the project. <br/>
 
 | Case        | Learning rate           | epochs  | IOU  |
 | ------------- |:-------------:| -----:| -----:|
-| case1  (low epoch)    | 0.01 | 5 | 0.01 |
-| case2   (low learn)    | 0.005      |   5 | 0.01 |
-| case3(solution case)  | 0.01     |    15 | 0.01 |
-| case4 (over fitting) | 0.01      |    20 | 0.01 |
+| case1  (low epoch)    | 0.01 | 5 | 28.2|
+| case2   (low learn)    | 0.005      |   5 | 24.6 |
+| case3(solution case)  | 0.01     |    15 | 42.3 |
+| case4 (over fitting) | 0.01      |    20 | 36.9 |
 
-#### Case 1:
+#### Case 1:<br/>
+
 ![alt text][graph_low_epoch] <br/>
 ![alt text][result_low_epoch] <br/>
+<b>Comments:"</b> Required IOU metric is not obtained. Loss value is in decreasing trend and not yet satuated. Can use more epoch to minimize the loss value and improve IOU metric.
 
-
-#### Case 2:
+#### Case 2:<br/>
 ![alt text][graph_low_rate] <br/>
-![alt text][result_low_rate] <br/>
+![alt text][result_low_rate] <br/><br/>
 
+<b>Comments:"</b> Required IOU metric is not obtained. Even though number of epochs are same, IOU value is decreased, this can be attributed to low learning rate. Minimum loss value is not yet obtained. Increase number of epochs and learning rate.
 
-#### Case 3:
+#### Case 3:<br/>
 ![alt text][graph_solution] <br/>
-![alt text][result_solution] <br/>
+![alt text][result_solution] <br/><br/>
+
+<b>Comments:"</b> Required IOU metric is obtained. Vaidtion error and loss vaue are closely related and  there are no obvious signs of overfitting.
 
 #### Case 4:
 ![alt text][graph_overfitting] <br/>
 ![alt text][result_overfitting] <br/><br/>
+
+<b>Comments:"</b> Required IOU metric is not obtained even though number of epochs increased. We can see a sharp raise in validation error. This  can be attributeed to overfitting.
 
 #### Encoder block:
 
