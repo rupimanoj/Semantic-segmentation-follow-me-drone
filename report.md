@@ -1,4 +1,22 @@
 [network_arch]: ./data/FCN_netwok_arch.PNG
+[network_arch]: ./data/chair.PNG
+[graph_low_epoch]: ./data/graph_low_epoch.PNG
+[graph_low_rate]: ./data/graph_slow_learn.PNG
+[graph_overfitting]: ./data/validation_graph.PNG
+[graph_solution]: ./data/solution_graph.PNG
+[result_low_epoch]: ./data/result_low_epoch.PNG
+[result_low_rate]: ./data/result_slow_learn.PNG
+[result_overfitting]: ./data/result_overfitting.PNG
+[result_solution]: ./data/solution_result.PNG
+[chair]: ./data/chair.PNG
+[high_level_features]: ./data/high_level.PNG
+[skip_connections]: ./data/skip_conection.PNG
+[upsampling]: ./data/upsampling.PNG
+[hero_slow_learn]: ./data/hero_slow_learn.PNG
+[hero_low_epoch]: ./data/hero_low_epoch.PNG
+[others_slow_learn]: ./data/others_slow_learn.PNG
+[others_low_epoch]: ./data/others_low_epoch.PNG
+[conv_exp]: ./data/conv_exp.PNG
 
 ### Network Architecture:
 
@@ -12,43 +30,7 @@ Important details and clear explaination of network are explained below.
 
 As part of earlier lab exercises fully connected convolution networks are used to classiy images. In fully connected convolution networks, at final stages of network, spatial inormation of features is lost as all the pixel values in reduced feature maps are spread vertically (no significance is given to pixel location) to make connections to neurons in next layer  . However as the task for semantic segmentation is to make classification at pixel level, the spatial importance of features becomes important. To solve this problem we have been introduced to concept of 1x1 convolution and FCN(Fully convolution networks). As in 1x1 convolution, operations are perormed only at single pixel level and adjacent pixels will not have any impact  in deciding the value of corresponding pixel in next layer fetaure map, spatiial infomation is kept intact. All the calculations and dimensionality reduction of feature maps will happen only along the depth direction. <br/><br/><br/>
 
-#### Encoder block:
 
-#### Seprable convolutions:
-
-In encoder block, for the initial hidden layers, seperable convolution 2d is used instead of normal convolution procedure. As explained in tutorial, seperable convolution has  an advantage to maintain less number of weights than compareed to normal convolution procedre. In theory, this can be shown by claiming convolving an image with two one dimensional matrices in sequence can be equivlent to cnvolving an image with single 2-dimensional matrix. <br/><br/>
-
-H = H1 x H2, H is a 2 dimensional matrix with size axb, H1 with ax1, H2 with 1xb. It can be shown that axb is significaantly larger than a+b. With this argument we can say that seprable convolutions need less number of weights to learn. For details please refer lecture slides.<br/>
-
-``` python
-def separable_conv2d_batchnorm(input_layer, filters, strides=1):
-    output_layer = SeparableConv2DKeras(filters=filters,kernel_size=3, strides=strides,
-                             padding='same', activation='relu')(input_layer)
-    
-    output_layer = layers.BatchNormalization()(output_layer) 
-    return output_layer
-```
-<br/><br/>
-#### Decoder block: Upsampling, concatenation, spatial information extraction
-
-For decoderr block, at each layer three important steps a performed as stated in notebook. For reefernce including  those steps. <br/>
-
-* A bilinear upsampling layer using the upsample_bilinear() function. The current recommended factor for upsampling is set to 2.
-* A layer concatenation step. This step is similar to skip connections. You will concatenate the upsampled small_ip_layer and the large_ip_layer.
-* Some (one or two) additional separable convolution layers to extract some more spatial information from prior layers.
-
-``` python
-def decoder_block(small_ip_layer, large_ip_layer, filters):
-    # TODO Upsample the small input layer using the bilinear_upsample() function.
-    output_layer = BilinearUpSampling2D((2,2))(small_ip_layer)
-    # TODO Concatenate the upsampled and large input layers using layers.concatenate
-    output_concatenate = layers.concatenate([output_layer, large_ip_layer])
-    # TODO Add some number of separable convolution layers
-    output_layer = separable_conv2d_batchnorm(output_concatenate, filters, strides=1)
-    return output_layer 
-```
-
-<br/><br/>
 
 ![alt text][network_arch] <br/>
 
@@ -110,18 +92,94 @@ In follow me deep learning project we have taken this approach to tune the learn
 
 The above insights are explained with  below results from the project. <br/>
 
-| Case        | Learning rate           | epochs  |
+| Case        | Learning rate           | epochs  | IOU  |
 | ------------- |:-------------:| -----:|
-| case1      | 0.01 | 5 |
-| case2       | 0.005      |   5 |
-| case3(solution case)  | 0.01     |    15 |
-| case4  | 0.01      |    20 |
+| case1  (low epoch)    | 0.01 | 5 | 0.01 |
+| case2   (low learn)    | 0.005      |   5 | 0.01 |
+| case3(solution case)  | 0.01     |    15 | 0.01 |
+| case4 (over fitting) | 0.01      |    20 | 0.01 |
 
 #### Case 1:
-#### Case 2:
-#### Case 3:
-#### Case 4:
+![alt text][graph_low_epoch] <br/>
+![alt text][result_low_epoch] <br/>
+![alt text][hero_low_epoch] <br/>
+![alt text][others_low_epoch] <br/>
 
+#### Case 2:
+![alt text][graph_low_rate] <br/>
+![alt text][result_low_rate] <br/>
+![alt text][hero_slow_learn] <br/>
+![alt text][others_slow_learn] <br/>
+
+#### Case 3:
+![alt text][graph_solution] <br/>
+![alt text][result_solution] <br/>
+
+#### Case 4:
+![alt text][validation_graph] <br/>
+![alt text][graph_overfitting] <br/><br/>
+
+#### Encoder block:
+
+Enncoder block is used to capture higher level hidden features of an image. With each layer in an encoder, the compexity of hidden feaures getting capture will be increased. For example, first layer will be used to capture edges and corners in an image, second hidden layer can be used to capture circular blobs, paralel lines or 'T' hape in an image and next layer will be used to capture more complex structures such as honeycomb like sructure. In training process, convolution filtters are learned to capture this latent features in an image. <br/>
+
+For example,in belo image even though chairs looks  different in color and size, its hiddden features are same. Parallel lines along legs, number of plane surfaces are same in both chairs. Encoder block is trained to capture this high level featres and treat both chairs belong  to same class.<br/>
+![alt text][chair] <br/>
+
+Below images show some higher level features encoder blok tries to capture from an image.<br/>
+
+![alt text][high_level_features] <br/>
+Below image shows activation map of convolution filters in hidden layers that aree used to cature parallel lines, diagonal lik structures, circular blobs etc.<br/>
+![alt text][conv_exp] <br/>
+
+#### Seprable convolutions:
+
+In encoder block, for the initial hidden layers, seperable convolution 2d is used instead of normal convolution procedure. As explained in tutorial, seperable convolution has  an advantage to maintain less number of weights than compareed to normal convolution procedre. In theory, this can be shown by claiming convolving an image with two one dimensional matrices in sequence can be equivlent to cnvolving an image with single 2-dimensional matrix. <br/><br/>
+
+H = H1 x H2, H is a 2 dimensional matrix with size axb, H1 with ax1, H2 with 1xb. It can be shown that axb is significaantly larger than a+b. With this argument we can say that seprable convolutions need less number of weights to learn. For details please refer lecture slides.<br/>
+
+``` python
+def separable_conv2d_batchnorm(input_layer, filters, strides=1):
+    output_layer = SeparableConv2DKeras(filters=filters,kernel_size=3, strides=strides,
+                             padding='same', activation='relu')(input_layer)
+    
+    output_layer = layers.BatchNormalization()(output_layer) 
+    return output_layer
+```
+<br/><br/>
+
+#### Decoder block:
+
+By the end of encoder block,the latent representation of an image will capture only hidden features of an image, but pixel level information is lost. To reconstruct the pixel level information from latent represetation/codensed representation we need to use interpolation techniques. For this project, we used biliner upsamping is used. Mathematically, bilinear upsampling uses linear combination of adjacent samples to constrct next layer image. Nearby samples will have more say than faraway samples. <br/>
+
+![alt text][upsampling] <br/>
+
+#### skip connections.
+
+Even though we try to reconstruct an image from it's condensed form/latent representation through intepolation, latent repsentation will have information only about local features. A global level information of an image is lost in latent representation. To gain this information, we use skip connections rom encoder block to deecoder block. Skip connections will be requied for fine grained labelling of pixels in semantic segmentation. <br/>
+
+Below picture illustrates the significance of skip connections. <br/>
+
+![alt text][skip_connections] <br/>
+
+For decoder block, at each layer three important steps a performed as stated in notebook. For reefernce including  those steps. <br/>
+
+* A bilinear upsampling layer using the upsample_bilinear() function. The current recommended factor for upsampling is set to 2.
+* A layer concatenation step. This step is similar to skip connections. You will concatenate the upsampled small_ip_layer and the large_ip_layer.
+* Some (one or two) additional separable convolution layers to extract some more spatial information from prior layers.
+
+``` python
+def decoder_block(small_ip_layer, large_ip_layer, filters):
+    # TODO Upsample the small input layer using the bilinear_upsample() function.
+    output_layer = BilinearUpSampling2D((2,2))(small_ip_layer)
+    # TODO Concatenate the upsampled and large input layers using layers.concatenate
+    output_concatenate = layers.concatenate([output_layer, large_ip_layer])
+    # TODO Add some number of separable convolution layers
+    output_layer = separable_conv2d_batchnorm(output_concatenate, filters, strides=1)
+    return output_layer 
+```
+
+<br/><br/>
 
 ### Future work
 
