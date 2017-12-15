@@ -59,12 +59,8 @@ def fcn_model(inputs, num_classes):
 
 * In encoder layer, with stride of 2 at each layer, spatial size of image is reduced from 160 -> 80 -> 40 ->20
 * In decoder layer, with up sampling of factor 2 is used. Hence feature map size is increased from 20 -> 40 ->80 ->160.
-* While concatenation layers from encoder layer to decoder layer, care is taken that feature map of equal spatial size are concatenated.
-* In decoder layer also we sue, separable convolutional layers, to learn weights that extract spatial information from prior layers and finally attain pixel level segmentation in last layer. <br/>
+* While concatenating layers from encoder layer to decoder layer as part of skip connections, care is taken that feature map of equal spatial size are concatenated.
 
-#### Extending model to other classes such as dogs and cats:
-
-With existing model, weights and data, it will become erroneous to make pixel wise classification for other categories such as cat or dog. We will be requiring data of other classes to train the network. However, new techniques have been proposed to do transfer learning for semantic segmentation task too. Such techniques are beyond scope of this course. An example can be found in this publication. (https://pdfs.semanticscholar.org/1837/decb49fb6fc68a6085e797faefb591fecb8a.pdf)
 
 ### Parameters selected:
 
@@ -184,6 +180,11 @@ def decoder_block(small_ip_layer, large_ip_layer, filters):
 ```
 
 <br/><br/>
+
+#### Extending model to other classes such as dogs and cats:
+
+With existing model, weights and data, it will become erroneous to make pixel wise classification for other categories such as cat or dog. We will be requiring data of other classes to train the network. However, new techniques have been proposed to do transfer learning for semantic segmentation task too. Such techniques are beyond scope of this course. An example can be found in this publication. (https://pdfs.semanticscholar.org/1837/decb49fb6fc68a6085e797faefb591fecb8a.pdf)
+
 
 ### Future work
 
