@@ -21,7 +21,7 @@
 ### Network Architecture:
 
 To perform semantic segmentation, fully convolution network is used. <br/>
-Initially reduced spatial features of image are captured using FCN approach. Using FCN, downsized feature map is achieved, where spatial information is retained. Thereafter, Decoder block is used to achieve pixel level classification. In decoder flow, up sampling techniques were used. Concatenation techniques were used to combine encoder layers to each layer in the decoder block to achieve finer level pixelwise segmentation. <br/><br/><br/>
+Initially reduced spatial features of image are captured using FCN approach. Using FCN, downsized feature map is achieved, where spatial information is retained. Thereafter, Decoder block is used to achieve pixel level classification. In decoder flow, up sampling techniques were used to reconstruct the image. Concatenation techniques were used to combine encoder layers to each layer in the decoder block to achieve finer level pixelwise segmentation. <br/><br/><br/>
 
 Important details and clear explanation of network are explained below.
 
